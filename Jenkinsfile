@@ -15,7 +15,23 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'docker build -f curriculum-front/Dockerfile .'
+        sh 'docker build -f curriculum-front/Dockerfile -t mychatgpt/curriculum-front:latest .'
+      }
+    }
+
+    stage('Log into Dockerhub') {
+      environment {
+        DOCKERHUB_USER = 'mychatgpt'
+        DOCKERHUB_PASSWORD = 'dckr_pat_UCHJSl684kZ0bZ5peCL9kcqTV-U'
+      }
+      steps {
+        sh 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD'
+      }
+    }
+
+    stage('Push') {
+      steps {
+        sh 'docker push mychatgpt/curriculum-front:latest'
       }
     }
 
