@@ -1,11 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      label 'docker-dind'
-      image 'jenkins/jnlp-slave' // Or use the appropriate Jenkins agent image with dind support
-      args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount the Docker socket from the host
-    }
-  }
+  agent any
   stages {
     stage('Checkout Code') {
       steps {
@@ -28,7 +22,7 @@ pipeline {
     stage('Log into Dockerhub') {
       environment {
         DOCKERHUB_USER = 'mychatgpt'
-        DOCKERHUB_PASSWORD = credentials('DOCKERHUB_PASSWORD') // Add the Dockerhub password as a Jenkins credential
+        DOCKERHUB_PASSWORD = 'dckr_pat_UCHJSl684kZ0bZ5peCL9kcqTV-U'
       }
       steps {
         sh 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD'
@@ -40,5 +34,6 @@ pipeline {
         sh 'docker push mychatgpt/curriculum-front:latest'
       }
     }
+
   }
 }
