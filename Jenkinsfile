@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Checkout Code') {
       steps {
-        git(url: 'https://github.com/faraday-academy/curriculum-app', branch: 'dev')
+        git(url: 'https://github.com/theuzumaki1111/curriculum-app', branch: 'main')
       }
     }
 
@@ -15,14 +15,14 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'docker build -f curriculum-front/Dockerfile -t fuze365/curriculum-front:latest .'
+        sh 'docker build -f curriculum-front/Dockerfile -t mychatgpt/curriculum-front:latest .'
       }
     }
 
     stage('Log into Dockerhub') {
       environment {
-        DOCKERHUB_USER = 'fuze365'
-        DOCKERHUB_PASSWORD = 'gv1&3Ea9W##onDQAMUG&41CvZ7h1d1'
+        DOCKERHUB_USER = 'mychatgpt'
+        DOCKERHUB_PASSWORD = 'dckr_pat_UCHJSl684kZ0bZ5peCL9kcqTV-U'
       }
       steps {
         sh 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD'
@@ -31,7 +31,7 @@ pipeline {
 
     stage('Push') {
       steps {
-        sh 'docker push fuze365/curriculum-front:latest'
+        sh 'docker push mychatgpt/curriculum-front:latest'
       }
     }
 
