@@ -3,6 +3,7 @@ WORKDIR /usr/src/app
 COPY curriculum-front/package*.json ./
 RUN ls -l
 RUN npm install
+RUN apk add --no-cache openssl
 COPY curriculum-front ./
 RUN ls -l
 RUN npm run build
